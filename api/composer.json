@@ -1,6 +1,11 @@
 {
     "name": "ads/takehome-task",
     "type": "project",
+    "config": {
+        "platform": {
+            "php": "8.3"
+        }
+    },
     "scripts": {
         "analyse": "phpstan analyse -c phpstan.neon",
         "format": "php-cs-fixer fix"

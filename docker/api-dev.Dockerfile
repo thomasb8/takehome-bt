@@ -2,15 +2,17 @@ FROM trafex/php-nginx:3.6.0 AS base
 
 USER root
 
-RUN apk add --no-cache \
+RUN apk update && apk upgrade && apk add \
     php83 \
     php83-common \
+    php83-iconv \
     php83-xdebug \
     php83-pdo \
     php83-pdo_mysql \
     composer \
     fish \
-    vim
+    vim \
+    && apk cache clean
 
 COPY supervisord.dev.conf   /etc/supervisord.conf
 COPY php.ini                /etc/php83/php.ini

@@ -2,16 +2,18 @@ FROM trafex/php-nginx:3.6.0 AS base
 
 USER root
 
-RUN apk add --no-cache \
+RUN apk update && apk upgrade && apk add \
     php83 \
     php83-common \
+    php83-iconv \
     php83-xdebug \
     php83-pdo \
     php83-pdo_mysql \
     nodejs \
     npm \
     vim \
-    composer
+    composer \
+    && apk cache clean
 
 COPY api/    /var/www/html/api
 COPY client/ /tmp/client
