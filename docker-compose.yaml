@@ -63,6 +63,16 @@ services:
     hostname: db
     container_name: takehome-db
     image: mysql:8.0.36
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        # Docker Desktop can reject chown on the socket link left by the image.
+        if [ "$$(readlink /var/lib/mysql/mysql.sock 2>/dev/null)" = /var/run/mysqld/mysqld.sock ]; then
+          unlink /var/lib/mysql/mysql.sock
+        fi
+        exec /usr/local/bin/docker-entrypoint.sh "$$@"
+      - mysql-entrypoint
     command: |
       mysqld 
       --character_set_server=utf8mb4
